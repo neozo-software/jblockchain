@@ -1,4 +1,4 @@
-package de.neozo.entities;
+package de.neozo.domain;
 
 
 import java.net.InetAddress;
