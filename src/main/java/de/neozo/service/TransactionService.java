@@ -3,16 +3,15 @@ package de.neozo.service;
 
 import de.neozo.domain.Transaction;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Service
 public class TransactionService {
 
-    private Set<Transaction> transactionPool;
+    private Set<Transaction> transactionPool = new HashSet<>();
 
 
     public Set<Transaction> getTransactionPool() {
