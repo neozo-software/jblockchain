@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,12 +35,20 @@ public class TransactionService {
         return transactionPool;
     }
 
-    public boolean add(Transaction transaction) {
+    public synchronized boolean add(Transaction transaction) {
         if (verify(transaction)) {
             transactionPool.add(transaction);
             return true;
         }
         return false;
+    }
+
+    public void remove(Transaction transaction) {
+        transactionPool.remove(transaction);
+    }
+
+    public boolean containsAll(Collection<Transaction> transactions) {
+        return transactionPool.containsAll(transactions);
     }
 
     private boolean verify(Transaction transaction) {

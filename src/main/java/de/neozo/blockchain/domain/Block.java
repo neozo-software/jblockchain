@@ -97,6 +97,15 @@ public class Block {
         return hashQueue.poll();
     }
 
+    public int getLeadingZerosCount() {
+        for (int i = 0; i < getHash().length; i++) {
+            if (getHash()[i] != 0) {
+                return i;
+            }
+        }
+        return getHash().length;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

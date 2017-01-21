@@ -2,9 +2,7 @@ package de.neozo.blockchain.service;
 
 
 import de.neozo.blockchain.domain.Address;
-import de.neozo.blockchain.domain.Block;
 import de.neozo.blockchain.domain.Transaction;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,14 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BlockServiceTests {
+public class MiningServiceTests {
 
-    @Autowired private BlockService blockService;
+    @Autowired private MiningService miningService;
     @Autowired private TransactionService transactionService;
     @Autowired private AddressService addressService;
     @Autowired private SignatureSevice signatureSevice;
@@ -36,30 +32,27 @@ public class BlockServiceTests {
     }
 
     @Test
-    public void addBlock_invalidHash() throws Exception {
-        Block block = new Block(null, generateTransactions(1), 42);
-        boolean success = blockService.append(block);
-        Assert.assertFalse(success);
+    public void startStopMiner() throws Exception {
+        final int initalTransactions = 100;
+        addTransactions(initalTransactions);
+
+        miningService.startMiner();
+
+        while (transactionService.getTransactionPool().size() == initalTransactions) {
+            Thread.sleep(1000);
+        }
+
+        miningService.stopMiner();
     }
 
-    @Test
-    public void addBlock_invalidLimitExceeded() throws Exception {
-        Block block = new Block(null, generateTransactions(6), 42);
-        boolean success = blockService.append(block);
-        Assert.assertFalse(success);
-    }
-
-    private List<Transaction> generateTransactions(int count) throws Exception {
-        List<Transaction> transactions = new ArrayList<>();
+    private void addTransactions(int count) throws Exception {
         for (int i = 0; i < count; i++) {
-            String text = "Hello " + i;
+            String text = "Demo Transaction " + i;
             byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
             Transaction transaction = new Transaction(text, address.getHash(), signature);
 
             transactionService.add(transaction);
-            transactions.add(transaction);
         }
-        return transactions;
     }
 
 }

@@ -17,11 +17,11 @@ public class NodeService {
         return knownNodes;
     }
 
-    public void add(Node node) {
+    public synchronized void add(Node node) {
         knownNodes.add(node);
     }
 
-    public void remove(Node node) {
+    public synchronized void remove(Node node) {
         knownNodes.remove(node);
     }
 

@@ -22,7 +22,7 @@ public class AddressService {
         return addresses.values();
     }
 
-    public void add(Address address) {
+    public synchronized void add(Address address) {
         addresses.put(address.getHash(), address);
     }
 
