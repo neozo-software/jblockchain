@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,14 +43,22 @@ public class TransactionService {
     }
 
     private boolean verify(Transaction transaction) {
+        // correct signature
         Address sender = addressService.getByHash(transaction.getSenderHash());
-
         try {
-            return signatureSevice.verify(transaction.getSignableData(), transaction.getSignature(), sender.getPublicKey());
+            if (!signatureSevice.verify(transaction.getSignableData(), transaction.getSignature(), sender.getPublicKey())) {
+                return false;
+            }
         } catch (Exception e) {
             LOG.error("error while verification", e);
         }
-        return false;
+
+        // correct hash
+        if (!Arrays.equals(transaction.getHash(), transaction.calculateHash())) {
+            return false;
+        }
+
+        return true;
     }
 
 }

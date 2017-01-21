@@ -7,13 +7,19 @@ public class Node {
 
     private InetAddress address;
 
+    public Node() {
+    }
+
+    public Node(InetAddress address) {
+        this.address = address;
+    }
+
     public InetAddress getAddress() {
         return address;
     }
 
-    public Node setAddress(InetAddress address) {
+    public void setAddress(InetAddress address) {
         this.address = address;
-        return this;
     }
 
     @Override

@@ -1,25 +1,13 @@
 package de.neozo.blockchain;
 
 
-import de.neozo.blockchain.domain.Node;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 public abstract class Config {
 
-    public static Node MASTER_NODE;
+    public static final String MASTER_NODE_ADDRESS = "localhost:8080";
 
-    private final static Logger LOG = LoggerFactory.getLogger(Config.class);
+    public static final int DIFICULTY = 2;
 
-    static {
-        try {
-            MASTER_NODE = new Node().setAddress(InetAddress.getLocalHost());
-        } catch (UnknownHostException e) {
-            LOG.error("can't init master node", e);
-        }
-    }
+    public static final int MAX_TRANSACTIONS_PER_BLOCK = 5;
+
 
 }

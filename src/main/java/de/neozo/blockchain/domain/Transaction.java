@@ -70,8 +70,9 @@ public class Transaction {
         return text.getBytes();
     }
 
-    private byte[] calculateHash() {
+    public byte[] calculateHash() {
         byte[] hashableData = ArrayUtils.addAll(text.getBytes(), senderHash);
+        hashableData = ArrayUtils.addAll(hashableData, signature);
         hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(timestamp));
         return DigestUtils.sha256(hashableData);
     }

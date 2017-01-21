@@ -1,8 +1,15 @@
 package de.neozo.blockchain.domain;
 
 
+import com.google.common.primitives.Longs;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Block {
 
@@ -13,58 +20,81 @@ public class Block {
     private long nonce;
     private long timestamp;
 
+    public Block() {
+    }
+
+    public Block(byte[] previousBlockHash, List<Transaction> transactions, long nonce) {
+        this.previousBlockHash = previousBlockHash;
+        this.transactions = transactions;
+        this.nonce = nonce;
+        this.timestamp = System.currentTimeMillis();
+        this.merkleRoot = calculateMerkleRoot();
+        this.hash = calculateHash();
+    }
+
     public byte[] getHash() {
         return hash;
     }
 
-    public Block setHash(byte[] hash) {
+    public void setHash(byte[] hash) {
         this.hash = hash;
-        return this;
     }
 
     public byte[] getPreviousBlockHash() {
         return previousBlockHash;
     }
 
-    public Block setPreviousBlockHash(byte[] previousBlockHash) {
+    public void setPreviousBlockHash(byte[] previousBlockHash) {
         this.previousBlockHash = previousBlockHash;
-        return this;
     }
 
     public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public Block setTransactions(List<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-        return this;
     }
 
     public byte[] getMerkleRoot() {
         return merkleRoot;
     }
 
-    public Block setMerkleRoot(byte[] merkleRoot) {
+    public void setMerkleRoot(byte[] merkleRoot) {
         this.merkleRoot = merkleRoot;
-        return this;
     }
 
     public long getNonce() {
         return nonce;
     }
 
-    public Block setNonce(long nonce) {
+    public void setNonce(long nonce) {
         this.nonce = nonce;
-        return this;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public Block setTimestamp(long timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-        return this;
+    }
+
+    public byte[] calculateHash() {
+        byte[] hashableData = ArrayUtils.addAll(previousBlockHash, merkleRoot);
+        hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(nonce));
+        hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(timestamp));
+        return DigestUtils.sha256(hashableData);
+    }
+
+    public byte[] calculateMerkleRoot() {
+        Queue<byte[]> hashQueue = new LinkedList<>();
+        hashQueue.addAll(transactions.stream().map(Transaction::getHash).collect(Collectors.toList()));
+        while (hashQueue.size() > 1) {
+            byte[] hashableData = ArrayUtils.addAll(hashQueue.poll(), hashQueue.poll());
+            hashQueue.add(DigestUtils.sha256(hashableData));
+        }
+        return hashQueue.poll();
     }
 
     @Override

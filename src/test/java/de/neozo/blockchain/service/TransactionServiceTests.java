@@ -34,7 +34,6 @@ public class TransactionServiceTests {
     @Test
     public void addTransaction_valid() throws Exception {
         String text = "Lorem Ipsum";
-        System.out.println(keyPair.getPrivate().getFormat());
         byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction(text, address.getHash(), signature);
 
@@ -45,7 +44,6 @@ public class TransactionServiceTests {
     @Test
     public void addTransaction_invalidText() throws Exception {
         String text = "Lorem Ipsum";
-        System.out.println(keyPair.getPrivate().getFormat());
         byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction("Fake text!!!", address.getHash(), signature);
 
@@ -55,12 +53,10 @@ public class TransactionServiceTests {
 
     @Test
     public void addTransaction_invalidSender() throws Exception {
-        keyPair = signatureSevice.generateKeyPair();
-        Address addressPresident = new Address("Mr. President", keyPair.getPublic().getEncoded());
+        Address addressPresident = new Address("Mr. President", signatureSevice.generateKeyPair().getPublic().getEncoded());
         addressService.add(addressPresident);
 
         String text = "Lorem Ipsum";
-        System.out.println(keyPair.getPrivate().getFormat());
         byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction(text, addressPresident.getHash(), signature);
 

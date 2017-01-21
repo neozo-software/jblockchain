@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -29,12 +30,7 @@ public class BlockControllerTests {
 
     @Test
     public void addCheck() throws UnknownHostException {
-        Block block = new Block()
-                .setNonce(1337)
-                .setHash(new byte[] {1, 2, 3})
-                .setMerkleRoot(new byte[] {10, 20, 30})
-                .setTimestamp(System.currentTimeMillis());
-
+        Block block = new Block(null, Collections.emptyList(), 1337);
         restTemplate.put(ENDPOINT, block);
 
         List<Block> blocks = Arrays.asList(restTemplate.getForObject(ENDPOINT, Block[].class));

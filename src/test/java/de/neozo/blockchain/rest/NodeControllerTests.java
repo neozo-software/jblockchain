@@ -30,7 +30,7 @@ public class NodeControllerTests {
 
     @Test
     public void addCheckRemove() throws UnknownHostException {
-        Node node = new Node().setAddress(Inet4Address.getByName("neozo.de"));
+        Node node = new Node(Inet4Address.getByName("neozo.de"));
 
         restTemplate.put(ENDPOINT, node);
 
