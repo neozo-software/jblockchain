@@ -3,12 +3,11 @@ package de.neozo.blockchain.service;
 
 import de.neozo.blockchain.domain.Address;
 import de.neozo.blockchain.domain.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,13 +15,17 @@ import java.util.Set;
 @Service
 public class TransactionService {
 
+    private final static Logger LOG = LoggerFactory.getLogger(TransactionService.class);
+
     private final AddressService addressService;
+    private final SignatureSevice signatureSevice;
 
     private Set<Transaction> transactionPool = new HashSet<>();
 
     @Autowired
-    public TransactionService(AddressService addressService) {
+    public TransactionService(AddressService addressService, SignatureSevice signatureSevice) {
         this.addressService = addressService;
+        this.signatureSevice = signatureSevice;
     }
 
 
@@ -41,19 +44,11 @@ public class TransactionService {
     private boolean verify(Transaction transaction) {
         Address sender = addressService.getByHash(transaction.getSenderHash());
 
-        X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(sender.getPublicKey());
-        KeyFactory keyFactory = null;
         try {
-            keyFactory = KeyFactory.getInstance("DSA", "SUN");
-            PublicKey pubKey = keyFactory.generatePublic(pubKeySpec);
-            Signature sig = Signature.getInstance("SHA1withDSA", "SUN");
-            sig.initVerify(pubKey);
-            sig.update(transaction.getSignableData());
-            return sig.verify(transaction.getSignature());
-        } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException | InvalidKeyException | SignatureException e) {
-            e.printStackTrace();
+            return signatureSevice.verify(transaction.getSignableData(), transaction.getSignature(), sender.getPublicKey());
+        } catch (Exception e) {
+            LOG.error("error while verification", e);
         }
-
         return false;
     }
 

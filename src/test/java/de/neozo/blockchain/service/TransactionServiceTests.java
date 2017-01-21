@@ -11,27 +11,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.KeyPair;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TransactionServiceTests {
 
-    @Autowired
-    private TransactionService transactionService;
-
-    @Autowired
-    private AddressService addressService;
+    @Autowired private TransactionService transactionService;
+    @Autowired private AddressService addressService;
+    @Autowired private SignatureSevice signatureSevice;
 
     private Address address;
+    private KeyPair keyPair;
 
     @Before
     public void setUp() throws Exception {
-        address = new Address("Max Mustermann", new byte[] {1, 2, 3});
+        keyPair = signatureSevice.generateKeyPair();
+        address = new Address("Max Mustermann", keyPair.getPublic().getEncoded());
         addressService.add(address);
     }
 
     @Test
-    public void addTransaction_invalid() {
-        Transaction transaction = new Transaction("Lorem Ipsum", address.getHash(), new byte[] {0});
+    public void addTransaction_valid() throws Exception {
+        String text = "Lorem Ipsum";
+        System.out.println(keyPair.getPrivate().getFormat());
+        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        Transaction transaction = new Transaction(text, address.getHash(), signature);
+
+        boolean success = transactionService.add(transaction);
+        Assert.assertTrue(success);
+    }
+
+    @Test
+    public void addTransaction_invalidText() throws Exception {
+        String text = "Lorem Ipsum";
+        System.out.println(keyPair.getPrivate().getFormat());
+        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        Transaction transaction = new Transaction("Fake text!!!", address.getHash(), signature);
+
+        boolean success = transactionService.add(transaction);
+        Assert.assertFalse(success);
+    }
+
+    @Test
+    public void addTransaction_invalidSender() throws Exception {
+        keyPair = signatureSevice.generateKeyPair();
+        Address addressPresident = new Address("Mr. President", keyPair.getPublic().getEncoded());
+        addressService.add(addressPresident);
+
+        String text = "Lorem Ipsum";
+        System.out.println(keyPair.getPrivate().getFormat());
+        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        Transaction transaction = new Transaction(text, addressPresident.getHash(), signature);
 
         boolean success = transactionService.add(transaction);
         Assert.assertFalse(success);

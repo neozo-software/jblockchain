@@ -10,10 +10,9 @@ import java.net.UnknownHostException;
 
 public abstract class Config {
 
-    public final static Logger LOG = LoggerFactory.getLogger(Config.class);
-
     public static Node MASTER_NODE;
 
+    private final static Logger LOG = LoggerFactory.getLogger(Config.class);
 
     static {
         try {
