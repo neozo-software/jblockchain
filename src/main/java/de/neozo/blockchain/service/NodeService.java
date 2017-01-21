@@ -1,7 +1,7 @@
-package de.neozo.service;
+package de.neozo.blockchain.service;
 
 
-import de.neozo.domain.Node;
+import de.neozo.blockchain.domain.Node;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -23,5 +23,9 @@ public class NodeService {
 
     public void remove(Node node) {
         knownNodes.remove(node);
+    }
+
+    public void broadcast(String endpoint, Object data) {
+        // TODO broadcasting
     }
 }

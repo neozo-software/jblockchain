@@ -1,7 +1,7 @@
-package de.neozo.service;
+package de.neozo.blockchain.service;
 
 
-import de.neozo.domain.Block;
+import de.neozo.blockchain.domain.Block;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

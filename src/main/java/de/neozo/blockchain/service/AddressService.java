@@ -1,7 +1,7 @@
-package de.neozo.service;
+package de.neozo.blockchain.service;
 
 
-import de.neozo.domain.Address;
+import de.neozo.blockchain.domain.Address;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,11 +14,11 @@ public class AddressService {
 
     private Map<byte[], Address> addresses = new HashMap<>();
 
-    public Address getAddress(byte[] hash) {
+    public Address getByHash(byte[] hash) {
         return addresses.get(hash);
     }
 
-    public Collection<Address> getAddresses() {
+    public Collection<Address> getAll() {
         return addresses.values();
     }
 

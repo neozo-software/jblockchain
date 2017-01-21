@@ -1,5 +1,9 @@
-package de.neozo.domain;
+package de.neozo.blockchain.domain;
 
+
+import com.google.common.primitives.Longs;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -11,49 +15,65 @@ public class Transaction {
     private byte[] signature;
     private long timestamp;
 
+    public Transaction() {
+    }
+
+    public Transaction(String text, byte[] senderHash, byte[] signature) {
+        this.text = text;
+        this.senderHash = senderHash;
+        this.signature = signature;
+        this.timestamp = System.currentTimeMillis();
+        this.hash = calculateHash();
+    }
+
     public byte[] getHash() {
         return hash;
     }
 
-    public Transaction setHash(byte[] hash) {
+    public void setHash(byte[] hash) {
         this.hash = hash;
-        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public Transaction setText(String text) {
+    public void setText(String text) {
         this.text = text;
-        return this;
     }
 
     public byte[] getSenderHash() {
         return senderHash;
     }
 
-    public Transaction setSenderHash(byte[] senderHash) {
+    public void setSenderHash(byte[] senderHash) {
         this.senderHash = senderHash;
-        return this;
     }
 
     public byte[] getSignature() {
         return signature;
     }
 
-    public Transaction setSignature(byte[] signature) {
+    public void setSignature(byte[] signature) {
         this.signature = signature;
-        return this;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public Transaction setTimestamp(long timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-        return this;
+    }
+
+    public byte[] getSignableData() {
+        return text.getBytes();
+    }
+
+    private byte[] calculateHash() {
+        byte[] hashableData = ArrayUtils.addAll(text.getBytes(), senderHash);
+        hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(timestamp));
+        return DigestUtils.sha256(hashableData);
     }
 
     @Override

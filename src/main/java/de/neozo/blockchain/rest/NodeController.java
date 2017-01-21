@@ -1,8 +1,8 @@
-package de.neozo.rest;
+package de.neozo.blockchain.rest;
 
 
-import de.neozo.domain.Node;
-import de.neozo.service.NodeService;
+import de.neozo.blockchain.domain.Node;
+import de.neozo.blockchain.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

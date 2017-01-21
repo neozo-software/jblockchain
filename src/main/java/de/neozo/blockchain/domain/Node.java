@@ -1,4 +1,4 @@
-package de.neozo.domain;
+package de.neozo.blockchain.domain;
 
 
 import java.net.InetAddress;
