@@ -3,6 +3,7 @@ package de.neozo.blockchain.service;
 
 import de.neozo.blockchain.domain.Node;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,8 @@ public class NodeService {
         knownNodes.remove(node);
     }
 
-    public void broadcast(String endpoint, Object data) {
-        // TODO broadcasting
+    public void broadcastPut(String endpoint, Object data) {
+        RestTemplate restTemplate = new RestTemplate();
+        knownNodes.parallelStream().forEach(node -> restTemplate.put(node.getAddress() + "/" + endpoint, data));
     }
 }

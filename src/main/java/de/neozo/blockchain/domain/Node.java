@@ -1,24 +1,22 @@
 package de.neozo.blockchain.domain;
 
 
-import java.net.InetAddress;
-
 public class Node {
 
-    private InetAddress address;
+    private String address;
 
     public Node() {
     }
 
-    public Node(InetAddress address) {
+    public Node(String address) {
         this.address = address;
     }
 
-    public InetAddress getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(InetAddress address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

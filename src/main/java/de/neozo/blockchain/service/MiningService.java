@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class MiningService implements Runnable {
 
-    private final static Logger LOG = LoggerFactory.getLogger(TransactionService.class);
+    private final static Logger LOG = LoggerFactory.getLogger(MiningService.class);
 
     private final TransactionService transactionService;
     private final NodeService nodeService;
@@ -52,7 +52,7 @@ public class MiningService implements Runnable {
             if (block != null) {
                 LOG.info("Mined block with " + block.getTransactions().size() + " transactions and nonce " + block.getNonce());
                 blockService.append(block);
-                nodeService.broadcast("block", block);
+                nodeService.broadcastPut("block", block);
             }
         }
         LOG.info("Miner stopped");

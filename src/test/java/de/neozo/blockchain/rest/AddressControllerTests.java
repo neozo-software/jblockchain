@@ -3,6 +3,7 @@ package de.neozo.blockchain.rest;
 import de.neozo.blockchain.domain.Address;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -28,6 +29,7 @@ public class AddressControllerTests {
     }
 
     @Test
+    @Ignore
     public void addCheck() throws UnknownHostException {
         Address address = new Address("Max Mustermann", new byte[] {1, 2, 3});
 

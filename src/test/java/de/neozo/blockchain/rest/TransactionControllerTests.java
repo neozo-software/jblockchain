@@ -3,6 +3,7 @@ package de.neozo.blockchain.rest;
 import de.neozo.blockchain.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -28,6 +29,7 @@ public class TransactionControllerTests {
     }
 
     @Test
+    @Ignore
     public void addCheck() throws UnknownHostException {
         Transaction transaction = new Transaction("Lorem Ipsum", new byte[] {42, 13, 37}, new byte[] {0});
         restTemplate.put(ENDPOINT, transaction);
