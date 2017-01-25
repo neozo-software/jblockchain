@@ -1,14 +1,20 @@
-package de.neozo.blockchain.domain;
+package de.neozo.blockchain.common.domain;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 public class Address {
 
+    @NotNull
     private byte[] hash;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private byte[] publicKey;
 
     public Address() {

@@ -1,18 +1,27 @@
-package de.neozo.blockchain.domain;
+package de.neozo.blockchain.common.domain;
 
 
 import com.google.common.primitives.Longs;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 public class Transaction {
 
+    @NotNull
     private byte[] hash;
+
+    @NotNull
     private String text;
+
+    @NotNull
     private byte[] senderHash;
+
+    @NotNull
     private byte[] signature;
+
     private long timestamp;
 
     public Transaction() {

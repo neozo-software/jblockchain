@@ -1,8 +1,8 @@
-package de.neozo.blockchain.rest;
+package de.neozo.blockchain.node.rest;
 
 
-import de.neozo.blockchain.domain.Node;
-import de.neozo.blockchain.service.NodeService;
+import de.neozo.blockchain.common.domain.Node;
+import de.neozo.blockchain.node.service.NodeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 
@@ -42,6 +43,11 @@ public class NodeController {
     void removeNode(@RequestBody Node node) {
         LOG.info("Remove node " + node.getAddress());
         nodeService.remove(node);
+    }
+
+    @RequestMapping(path = "ip")
+    String getIp(HttpServletRequest request) {
+        return request.getRemoteAddr();
     }
 
 }

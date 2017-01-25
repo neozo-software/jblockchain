@@ -1,13 +1,13 @@
-package de.neozo.blockchain;
+package de.neozo.blockchain.node;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class BlockchainApplication {
+public class BlockchainNode {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BlockchainApplication.class, args);
+		SpringApplication.run(BlockchainNode.class, args);
 	}
 }

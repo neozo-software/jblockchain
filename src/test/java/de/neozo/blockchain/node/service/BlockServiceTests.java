@@ -1,9 +1,10 @@
-package de.neozo.blockchain.service;
+package de.neozo.blockchain.node.service;
 
 
-import de.neozo.blockchain.domain.Address;
-import de.neozo.blockchain.domain.Block;
-import de.neozo.blockchain.domain.Transaction;
+import de.neozo.blockchain.common.SignatureUtils;
+import de.neozo.blockchain.common.domain.Address;
+import de.neozo.blockchain.common.domain.Block;
+import de.neozo.blockchain.common.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,14 +24,13 @@ public class BlockServiceTests {
     @Autowired private BlockService blockService;
     @Autowired private TransactionService transactionService;
     @Autowired private AddressService addressService;
-    @Autowired private SignatureSevice signatureSevice;
 
     private Address address;
     private KeyPair keyPair;
 
     @Before
     public void setUp() throws Exception {
-        keyPair = signatureSevice.generateKeyPair();
+        keyPair = SignatureUtils.generateKeyPair();
         address = new Address("Max Mustermann", keyPair.getPublic().getEncoded());
         addressService.add(address);
     }
@@ -53,7 +53,7 @@ public class BlockServiceTests {
         List<Transaction> transactions = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             String text = "Hello " + i;
-            byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+            byte[] signature = SignatureUtils.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
             Transaction transaction = new Transaction(text, address.getHash(), signature);
 
             transactionService.add(transaction);

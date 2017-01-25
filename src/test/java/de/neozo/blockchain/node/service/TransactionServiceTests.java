@@ -1,8 +1,9 @@
-package de.neozo.blockchain.service;
+package de.neozo.blockchain.node.service;
 
 
-import de.neozo.blockchain.domain.Address;
-import de.neozo.blockchain.domain.Transaction;
+import de.neozo.blockchain.common.SignatureUtils;
+import de.neozo.blockchain.common.domain.Address;
+import de.neozo.blockchain.common.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,14 +20,13 @@ public class TransactionServiceTests {
 
     @Autowired private TransactionService transactionService;
     @Autowired private AddressService addressService;
-    @Autowired private SignatureSevice signatureSevice;
 
     private Address address;
     private KeyPair keyPair;
 
     @Before
     public void setUp() throws Exception {
-        keyPair = signatureSevice.generateKeyPair();
+        keyPair = SignatureUtils.generateKeyPair();
         address = new Address("Max Mustermann", keyPair.getPublic().getEncoded());
         addressService.add(address);
     }
@@ -34,7 +34,7 @@ public class TransactionServiceTests {
     @Test
     public void addTransaction_valid() throws Exception {
         String text = "Lorem Ipsum";
-        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        byte[] signature = SignatureUtils.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction(text, address.getHash(), signature);
 
         boolean success = transactionService.add(transaction);
@@ -44,7 +44,7 @@ public class TransactionServiceTests {
     @Test
     public void addTransaction_invalidText() throws Exception {
         String text = "Lorem Ipsum";
-        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        byte[] signature = SignatureUtils.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction("Fake text!!!", address.getHash(), signature);
 
         boolean success = transactionService.add(transaction);
@@ -53,11 +53,11 @@ public class TransactionServiceTests {
 
     @Test
     public void addTransaction_invalidSender() throws Exception {
-        Address addressPresident = new Address("Mr. President", signatureSevice.generateKeyPair().getPublic().getEncoded());
+        Address addressPresident = new Address("Mr. President", SignatureUtils.generateKeyPair().getPublic().getEncoded());
         addressService.add(addressPresident);
 
         String text = "Lorem Ipsum";
-        byte[] signature = signatureSevice.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
+        byte[] signature = SignatureUtils.sign(text.getBytes(), keyPair.getPrivate().getEncoded());
         Transaction transaction = new Transaction(text, addressPresident.getHash(), signature);
 
         boolean success = transactionService.add(transaction);

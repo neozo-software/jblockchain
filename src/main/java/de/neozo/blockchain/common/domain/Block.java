@@ -1,10 +1,11 @@
-package de.neozo.blockchain.domain;
+package de.neozo.blockchain.common.domain;
 
 
 import com.google.common.primitives.Longs;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,11 +14,19 @@ import java.util.stream.Collectors;
 
 public class Block {
 
+    @NotNull
     private byte[] hash;
+
     private byte[] previousBlockHash;
+
+    @NotNull
     private List<Transaction> transactions;
+
+    @NotNull
     private byte[] merkleRoot;
+
     private long nonce;
+
     private long timestamp;
 
     public Block() {

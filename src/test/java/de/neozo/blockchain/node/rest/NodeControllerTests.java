@@ -1,6 +1,6 @@
-package de.neozo.blockchain.rest;
+package de.neozo.blockchain.node.rest;
 
-import de.neozo.blockchain.domain.Address;
+import de.neozo.blockchain.common.domain.Node;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @RestClientTest()
-public class AddressControllerTests {
+public class NodeControllerTests {
 
-    private final static String ENDPOINT = "http://localhost:8080/address";
+    private final static String ENDPOINT = "http://localhost:8080/node";
 
     private RestTemplate restTemplate;
 
@@ -30,14 +32,15 @@ public class AddressControllerTests {
 
     @Test
     @Ignore
-    public void addCheck() throws UnknownHostException {
-        Address address = new Address("Max Mustermann", new byte[] {1, 2, 3});
+    public void addCheckRemove() throws UnknownHostException, MalformedURLException {
+        Node node = new Node(new URL("neozo.de"));
 
-        restTemplate.put(ENDPOINT, address);
+        restTemplate.put(ENDPOINT, node);
 
-        List<Address> addresses = Arrays.asList(restTemplate.getForObject(ENDPOINT, Address[].class));
-        Assert.assertTrue(addresses.contains(address));
+        List<Node> nodes = Arrays.asList(restTemplate.getForObject(ENDPOINT, Node[].class));
+        Assert.assertTrue(nodes.contains(node));
 
+        restTemplate.postForLocation(ENDPOINT + "/remove", node);
     }
 
 

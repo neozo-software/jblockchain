@@ -1,6 +1,6 @@
-package de.neozo.blockchain.rest;
+package de.neozo.blockchain.node.rest;
 
-import de.neozo.blockchain.domain.Block;
+import de.neozo.blockchain.common.domain.Address;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -12,15 +12,14 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
 @RunWith(SpringRunner.class)
 @RestClientTest()
-public class BlockControllerTests {
+public class AddressControllerTests {
 
-    private final static String ENDPOINT = "http://localhost:8080/block";
+    private final static String ENDPOINT = "http://localhost:8080/address";
 
     private RestTemplate restTemplate;
 
@@ -32,11 +31,13 @@ public class BlockControllerTests {
     @Test
     @Ignore
     public void addCheck() throws UnknownHostException {
-        Block block = new Block(null, Collections.emptyList(), 1337);
-        restTemplate.put(ENDPOINT, block);
+        Address address = new Address("Max Mustermann", new byte[] {1, 2, 3});
 
-        List<Block> blocks = Arrays.asList(restTemplate.getForObject(ENDPOINT, Block[].class));
-        Assert.assertTrue(blocks.contains(block));
+        restTemplate.put(ENDPOINT, address);
+
+        List<Address> addresses = Arrays.asList(restTemplate.getForObject(ENDPOINT, Address[].class));
+        Assert.assertTrue(addresses.contains(address));
+
     }
 
 

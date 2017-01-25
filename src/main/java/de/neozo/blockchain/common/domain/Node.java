@@ -1,10 +1,12 @@
-package de.neozo.blockchain.domain;
+package de.neozo.blockchain.common.domain;
 
 
+import javax.validation.constraints.NotNull;
 import java.net.URL;
 
 public class Node {
 
+    @NotNull
     private URL address;
 
     public Node() {

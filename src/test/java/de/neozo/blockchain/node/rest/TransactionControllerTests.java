@@ -1,6 +1,6 @@
-package de.neozo.blockchain.rest;
+package de.neozo.blockchain.node.rest;
 
-import de.neozo.blockchain.domain.Transaction;
+import de.neozo.blockchain.common.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;

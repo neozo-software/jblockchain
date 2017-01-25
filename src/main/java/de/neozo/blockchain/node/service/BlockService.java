@@ -1,9 +1,9 @@
-package de.neozo.blockchain.service;
+package de.neozo.blockchain.node.service;
 
 
-import de.neozo.blockchain.Config;
-import de.neozo.blockchain.domain.Block;
-import de.neozo.blockchain.domain.Node;
+import de.neozo.blockchain.common.domain.Block;
+import de.neozo.blockchain.common.domain.Node;
+import de.neozo.blockchain.node.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,10 +91,6 @@ public class BlockService {
         }
 
         // considered difficulty
-        if (block.getLeadingZerosCount() < Config.DIFFICULTY) {
-            return false;
-        }
-
-        return true;
+        return block.getLeadingZerosCount() >= Config.DIFFICULTY;
     }
 }

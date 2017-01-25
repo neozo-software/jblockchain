@@ -1,16 +1,16 @@
-package de.neozo.blockchain.rest;
+package de.neozo.blockchain.node.rest;
 
 
-import de.neozo.blockchain.domain.Transaction;
-import de.neozo.blockchain.service.NodeService;
-import de.neozo.blockchain.service.TransactionService;
+import de.neozo.blockchain.common.domain.Transaction;
+import de.neozo.blockchain.node.service.NodeService;
+import de.neozo.blockchain.node.service.TransactionService;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.Set;
 
 
@@ -37,7 +37,7 @@ public class TransactionController {
 
     @RequestMapping(method = RequestMethod.PUT)
     void addTransaction(@RequestBody Transaction transaction, @RequestParam(required = false) Boolean publish, HttpServletResponse response) {
-        LOG.info("Add transaction " + Arrays.toString(transaction.getHash()));
+        LOG.info("Add transaction " + Base64.encodeBase64String(transaction.getHash()));
         boolean success = transactionService.add(transaction);
 
         if (success) {
