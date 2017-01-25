@@ -2,16 +2,15 @@ package de.neozo.blockchain.service;
 
 
 import de.neozo.blockchain.domain.Address;
+import de.neozo.blockchain.domain.Node;
 import de.neozo.blockchain.domain.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -70,4 +69,9 @@ public class TransactionService {
         return true;
     }
 
+    public void retrieveTransactions(Node node, RestTemplate restTemplate) {
+        Transaction[] transactions = restTemplate.getForObject(node.getAddress() + "/transaction", Transaction[].class);
+        Collections.addAll(transactionPool, transactions);
+        LOG.info("Retrieved " + transactions.length + " transactions from node " + node.getAddress());
+    }
 }

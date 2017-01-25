@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
@@ -30,8 +32,8 @@ public class NodeControllerTests {
 
     @Test
     @Ignore
-    public void addCheckRemove() throws UnknownHostException {
-        Node node = new Node("neozo.de");
+    public void addCheckRemove() throws UnknownHostException, MalformedURLException {
+        Node node = new Node(new URL("neozo.de"));
 
         restTemplate.put(ENDPOINT, node);
 

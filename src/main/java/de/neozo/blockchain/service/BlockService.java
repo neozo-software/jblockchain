@@ -3,16 +3,23 @@ package de.neozo.blockchain.service;
 
 import de.neozo.blockchain.Config;
 import de.neozo.blockchain.domain.Block;
+import de.neozo.blockchain.domain.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
 @Service
 public class BlockService {
+
+    private final static Logger LOG = LoggerFactory.getLogger(BlockService.class);
 
     private final TransactionService transactionService;
 
@@ -44,6 +51,13 @@ public class BlockService {
         }
         return false;
     }
+
+    public void retrieveBlockchain(Node node, RestTemplate restTemplate) {
+        Block[] blocks = restTemplate.getForObject(node.getAddress() + "/block", Block[].class);
+        Collections.addAll(blockchain, blocks);
+        LOG.info("Retrieved " + blocks.length + " blocks from node " + node.getAddress());
+    }
+
 
     private boolean verify(Block block) {
         // references last block in chain
