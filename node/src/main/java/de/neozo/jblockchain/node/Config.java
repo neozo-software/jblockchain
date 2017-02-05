@@ -1,4 +1,4 @@
-package de.neozo.blockchain.node;
+package de.neozo.jblockchain.node;
 
 
 public abstract class Config {

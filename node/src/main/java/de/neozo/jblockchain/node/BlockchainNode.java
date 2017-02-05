@@ -1,4 +1,4 @@
-package de.neozo.blockchain.node;
+package de.neozo.jblockchain.node;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

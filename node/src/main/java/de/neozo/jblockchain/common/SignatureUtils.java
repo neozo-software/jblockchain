@@ -1,4 +1,4 @@
-package de.neozo.blockchain.common;
+package de.neozo.jblockchain.common;
 
 
 import org.slf4j.Logger;

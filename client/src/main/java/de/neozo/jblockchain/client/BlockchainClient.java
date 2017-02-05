@@ -1,9 +1,9 @@
 package de.neozo.jblockchain.client;
 
 
-import de.neozo.blockchain.common.SignatureUtils;
-import de.neozo.blockchain.common.domain.Address;
-import de.neozo.blockchain.common.domain.Transaction;
+import de.neozo.jblockchain.common.SignatureUtils;
+import de.neozo.jblockchain.common.domain.Address;
+import de.neozo.jblockchain.common.domain.Transaction;
 import org.apache.commons.cli.*;
 import org.springframework.web.client.RestTemplate;
 

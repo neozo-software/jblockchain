@@ -1,4 +1,4 @@
-package de.neozo.blockchain.common.domain;
+package de.neozo.jblockchain.common.domain;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;

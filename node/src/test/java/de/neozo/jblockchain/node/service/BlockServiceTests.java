@@ -1,10 +1,10 @@
-package de.neozo.blockchain.node.service;
+package de.neozo.jblockchain.node.service;
 
 
-import de.neozo.blockchain.common.SignatureUtils;
-import de.neozo.blockchain.common.domain.Address;
-import de.neozo.blockchain.common.domain.Block;
-import de.neozo.blockchain.common.domain.Transaction;
+import de.neozo.jblockchain.common.SignatureUtils;
+import de.neozo.jblockchain.common.domain.Address;
+import de.neozo.jblockchain.common.domain.Block;
+import de.neozo.jblockchain.common.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

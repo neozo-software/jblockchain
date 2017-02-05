@@ -1,7 +1,7 @@
-package de.neozo.blockchain.node.service;
+package de.neozo.jblockchain.node.service;
 
 
-import de.neozo.blockchain.common.domain.Address;
+import de.neozo.jblockchain.common.domain.Address;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 

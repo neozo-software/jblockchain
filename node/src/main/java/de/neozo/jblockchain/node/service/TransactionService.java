@@ -1,10 +1,10 @@
-package de.neozo.blockchain.node.service;
+package de.neozo.jblockchain.node.service;
 
 
-import de.neozo.blockchain.common.SignatureUtils;
-import de.neozo.blockchain.common.domain.Address;
-import de.neozo.blockchain.common.domain.Node;
-import de.neozo.blockchain.common.domain.Transaction;
+import de.neozo.jblockchain.common.SignatureUtils;
+import de.neozo.jblockchain.common.domain.Address;
+import de.neozo.jblockchain.common.domain.Node;
+import de.neozo.jblockchain.common.domain.Transaction;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

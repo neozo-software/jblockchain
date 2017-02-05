@@ -1,8 +1,8 @@
-package de.neozo.blockchain.node.rest;
+package de.neozo.jblockchain.node.rest;
 
 
-import de.neozo.blockchain.common.domain.Node;
-import de.neozo.blockchain.node.service.NodeService;
+import de.neozo.jblockchain.common.domain.Node;
+import de.neozo.jblockchain.node.service.NodeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

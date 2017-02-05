@@ -1,4 +1,4 @@
-package de.neozo.blockchain.common.domain;
+package de.neozo.jblockchain.common.domain;
 
 
 import com.google.common.primitives.Longs;

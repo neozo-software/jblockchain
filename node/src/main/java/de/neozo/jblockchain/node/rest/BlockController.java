@@ -1,10 +1,10 @@
-package de.neozo.blockchain.node.rest;
+package de.neozo.jblockchain.node.rest;
 
 
-import de.neozo.blockchain.common.domain.Block;
-import de.neozo.blockchain.node.service.BlockService;
-import de.neozo.blockchain.node.service.MiningService;
-import de.neozo.blockchain.node.service.NodeService;
+import de.neozo.jblockchain.common.domain.Block;
+import de.neozo.jblockchain.node.service.BlockService;
+import de.neozo.jblockchain.node.service.MiningService;
+import de.neozo.jblockchain.node.service.NodeService;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
