@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.neozo</groupId>
-	<artifactId>blockchain</artifactId>
+	<artifactId>jblockchain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>blockchain</name>
+	<name>jblockchain</name>
 	<description>Simple blockchain implementation</description>
 
 	<parent>
