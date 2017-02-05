@@ -6,7 +6,11 @@
 	<groupId>de.neozo</groupId>
 	<artifactId>jblockchain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>node</module>
+        <module>client</module>
+    </modules>
+    <packaging>pom</packaging>
 
 	<name>jblockchain</name>
 	<description>Simple blockchain implementation</description>
@@ -22,10 +26,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<start-class>de.neozo.blockchain.node.BlockchainNode</start-class>
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -54,12 +58,6 @@
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
 		</dependency>
-
-        <dependency>
-            <groupId>commons-cli</groupId>
-            <artifactId>commons-cli</artifactId>
-            <version>1.3</version>
-        </dependency>
 
     </dependencies>
 

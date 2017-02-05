@@ -1,4 +1,4 @@
-package de.neozo.blockchain.client;
+package de.neozo.jblockchain.client;
 
 
 import de.neozo.blockchain.common.SignatureUtils;
@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Base64;
 
-// TODO: separate module
 
 public class BlockchainClient {
 
