@@ -6,6 +6,9 @@ import java.net.URL;
 
 public class Node {
 
+    /**
+     * HTTP-Address including port on which the addressed node listens for incoming connections
+     */
     @NotNull
     private URL address;
 
