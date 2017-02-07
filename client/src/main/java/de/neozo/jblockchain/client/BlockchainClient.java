@@ -18,6 +18,15 @@ import java.security.NoSuchProviderException;
 import java.util.Base64;
 
 
+/**
+ * Simple class to help building REST calls for jBlockchain.
+ * Just run it in command line for instructions on how to use it.
+ *
+ * Functions include:
+ * - Generate Private/Public-Key
+ * - Publish a new Address
+ * - Publish a new Transaction
+ */
 public class BlockchainClient {
 
     public static void main(String args[]) throws Exception {
