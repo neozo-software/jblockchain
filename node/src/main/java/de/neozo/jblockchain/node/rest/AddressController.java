@@ -28,12 +28,21 @@ public class AddressController {
         this.nodeService = nodeService;
     }
 
+    /**
+     * Get all Addresses this node knows
+     * @return JSON list of Addresses
+     */
     @RequestMapping
-    Collection<Address> getTransactionPool() {
+    Collection<Address> getAdresses() {
         return addressService.getAll();
     }
 
 
+    /**
+     * Add a new Address
+     * @param address the Address to add
+     * @param publish if true, this Node is going to inform all other Nodes about the new Address
+     */
     @RequestMapping(method = RequestMethod.PUT)
     void addAddress(@RequestBody Address address, @RequestParam(required = false) Boolean publish) {
         LOG.info("Add address " + Base64.encodeBase64String(address.getHash()));

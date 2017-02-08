@@ -94,6 +94,10 @@ public class Transaction {
         return text.getBytes();
     }
 
+    /**
+     * Calculates the hash using relevant fields of this type
+     * @return SHA256-hash as raw bytes
+     */
     public byte[] calculateHash() {
         byte[] hashableData = ArrayUtils.addAll(text.getBytes(), senderHash);
         hashableData = ArrayUtils.addAll(hashableData, signature);

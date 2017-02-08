@@ -28,23 +28,40 @@ public class NodeController {
         this.nodeService = nodeService;
     }
 
+    /**
+     * Get all Nodes this node knows
+     * @return JSON list of addresses
+     */
     @RequestMapping()
     Set<Node> getNodes() {
         return nodeService.getKnownNodes();
     }
 
+    /**
+     * Add a new Node
+     * @param node the Node to add
+     */
     @RequestMapping(method = RequestMethod.PUT)
     void addNode(@RequestBody Node node) {
         LOG.info("Add node " + node.getAddress());
         nodeService.add(node);
     }
 
+    /**
+     * Remove a Node
+     * @param node the Node to remove
+     */
     @RequestMapping(path = "remove", method = RequestMethod.POST)
     void removeNode(@RequestBody Node node) {
         LOG.info("Remove node " + node.getAddress());
         nodeService.remove(node);
     }
 
+    /**
+     * Helper to determine the external address for new Nodes.
+     * @param request HttpServletRequest
+     * @return the remote address
+     */
     @RequestMapping(path = "ip")
     String getIp(HttpServletRequest request) {
         return request.getRemoteAddr();

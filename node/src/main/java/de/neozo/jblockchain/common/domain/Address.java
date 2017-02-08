@@ -60,6 +60,10 @@ public class Address {
         this.name = name;
     }
 
+    /**
+     * Calculates the hash using relevant fields of this type
+     * @return SHA256-hash as raw bytes
+     */
     private byte[] calculateHash() {
         byte[] hashableData = ArrayUtils.addAll(name.getBytes(), publicKey);
         return DigestUtils.sha256(hashableData);
