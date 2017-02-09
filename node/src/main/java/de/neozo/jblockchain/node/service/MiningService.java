@@ -32,6 +32,9 @@ public class MiningService implements Runnable {
         this.blockService = blockService;
     }
 
+    /**
+     * Start the miner
+     */
     public void startMiner() {
         if (runMiner.compareAndSet(false, true)) {
             LOG.info("Starting miner");
@@ -40,16 +43,23 @@ public class MiningService implements Runnable {
         }
     }
 
+    /**
+     * Stop the miner after next iteration
+     */
     public void stopMiner() {
         LOG.info("Stopping miner");
         runMiner.set(false);
     }
 
+    /**
+     * Loop for new blocks until someone signals to stop
+     */
     @Override
     public void run() {
         while (runMiner.get()) {
             Block block = mineBlock();
             if (block != null) {
+                // Found block! Append and publish
                 LOG.info("Mined block with " + block.getTransactions().size() + " transactions and nonce " + block.getNonce());
                 blockService.append(block);
                 nodeService.broadcastPut("block", block);
@@ -66,6 +76,7 @@ public class MiningService implements Runnable {
         List<Transaction> transactions = transactionService.getTransactionPool()
                 .stream().limit(Config.MAX_TRANSACTIONS_PER_BLOCK).collect(Collectors.toList());
 
+        // sleep if no more transactions left
         if (transactions.isEmpty()) {
             LOG.info("No transactions available, pausing");
             try {

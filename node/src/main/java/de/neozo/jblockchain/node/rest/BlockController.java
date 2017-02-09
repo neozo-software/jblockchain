@@ -32,11 +32,23 @@ public class BlockController {
         this.miningService = miningService;
     }
 
+    /**
+     * Retrieve all Blocks in order of mine date, also known as Blockchain
+     * @return JSON list of Blocks
+     */
     @RequestMapping
     List<Block> getBlockchain() {
         return blockService.getBlockchain();
     }
 
+    /**
+     * Add a new Block at the end of the Blockchain.
+     * It is expected that the Block is valid, see BlockService.verify(Block) for details.
+     *
+     * @param block the Block to add
+     * @param publish if true, this Node is going to inform all other Nodes about the new Block
+     * @param response Status Code 202 if Block accepted, 406 if verification fails
+     */
     @RequestMapping(method = RequestMethod.PUT)
     void addBlock(@RequestBody Block block, @RequestParam(required = false) Boolean publish, HttpServletResponse response) {
         LOG.info("Add block " + Base64.encodeBase64String(block.getHash()));
@@ -53,11 +65,17 @@ public class BlockController {
         }
     }
 
+    /**
+     * Start mining of Blocks on this Node in a Thread
+     */
     @RequestMapping(path = "start-miner")
     public void startMiner() {
         miningService.startMiner();
     }
 
+    /**
+     * Stop mining of Blocks on this Node
+     */
     @RequestMapping(path = "stop-miner")
     public void stopMiner() {
         miningService.stopMiner();

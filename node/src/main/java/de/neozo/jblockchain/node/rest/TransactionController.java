@@ -31,7 +31,7 @@ public class TransactionController {
 
     /**
      * Retrieve all Transactions, which aren't in a block yet
-     * @return JSON list of all Transactions
+     * @return JSON list of Transactions
      */
     @RequestMapping
     Set<Transaction> getTransactionPool() {
@@ -44,7 +44,7 @@ public class TransactionController {
      * It is expected that the transaction has a valid signature and the correct hash.
      *
      * @param transaction the Transaction to add
-     * @param publish if true, this Node is going to inform all other Nodes about the new Address
+     * @param publish if true, this Node is going to inform all other Nodes about the new Transaction
      * @param response Status Code 202 if Transaction accepted, 406 if verification fails
      */
     @RequestMapping(method = RequestMethod.PUT)

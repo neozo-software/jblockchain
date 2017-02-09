@@ -22,6 +22,10 @@ public class TransactionService {
 
     private final AddressService addressService;
 
+
+    /**
+     * Pool of Transactions which are not included in a Block yet.
+     */
     private Set<Transaction> transactionPool = new HashSet<>();
 
     @Autowired
@@ -34,6 +38,11 @@ public class TransactionService {
         return transactionPool;
     }
 
+    /**
+     * Add a new Transaction to the pool
+     * @param transaction Transaction to add
+     * @return true if verifcation succeeds and Transaction was added
+     */
     public synchronized boolean add(Transaction transaction) {
         if (verify(transaction)) {
             transactionPool.add(transaction);
@@ -42,10 +51,19 @@ public class TransactionService {
         return false;
     }
 
+    /**
+     * Remove Transaction from pool
+     * @param transaction Transaction to remove
+     */
     public void remove(Transaction transaction) {
         transactionPool.remove(transaction);
     }
 
+    /**
+     * Does the pool contain all given Transactions?
+     * @param transactions Collection of Transactions to check
+     * @return true if all Transactions are member of the pool
+     */
     public boolean containsAll(Collection<Transaction> transactions) {
         return transactionPool.containsAll(transactions);
     }
@@ -77,6 +95,11 @@ public class TransactionService {
         return true;
     }
 
+    /**
+     * Download Transactions from other Node and them to the pool
+     * @param node Node to query
+     * @param restTemplate RestTemplate to use
+     */
     public void retrieveTransactions(Node node, RestTemplate restTemplate) {
         Transaction[] transactions = restTemplate.getForObject(node.getAddress() + "/transaction", Transaction[].class);
         Collections.addAll(transactionPool, transactions);

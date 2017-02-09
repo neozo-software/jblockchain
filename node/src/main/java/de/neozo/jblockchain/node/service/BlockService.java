@@ -34,6 +34,10 @@ public class BlockService {
         return blockchain;
     }
 
+    /**
+     * Determine the last added Block
+     * @return Last Block in chain
+     */
     public Block getLastBlock() {
         if (blockchain.isEmpty()) {
             return null;
@@ -41,6 +45,11 @@ public class BlockService {
         return blockchain.get(blockchain.size() - 1);
     }
 
+    /**
+     * Append a new Block at the end of chain
+     * @param block Block to append
+     * @return true if verifcation succeeds and Block was appended
+     */
     public synchronized boolean append(Block block) {
         if (verify(block)) {
             blockchain.add(block);
@@ -52,6 +61,11 @@ public class BlockService {
         return false;
     }
 
+    /**
+     * Download Blocks from other Node and them to the blockchain
+     * @param node Node to query
+     * @param restTemplate RestTemplate to use
+     */
     public void retrieveBlockchain(Node node, RestTemplate restTemplate) {
         Block[] blocks = restTemplate.getForObject(node.getAddress() + "/block", Block[].class);
         Collections.addAll(blockchain, blocks);
