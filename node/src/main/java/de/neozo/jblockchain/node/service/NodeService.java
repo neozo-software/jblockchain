@@ -1,7 +1,6 @@
 package de.neozo.jblockchain.node.service;
 
 
-import de.neozo.jblockchain.common.domain.Address;
 import de.neozo.jblockchain.common.domain.Node;
 import de.neozo.jblockchain.node.Config;
 import org.slf4j.Logger;

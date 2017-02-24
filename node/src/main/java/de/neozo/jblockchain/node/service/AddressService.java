@@ -1,18 +1,16 @@
 package de.neozo.jblockchain.node.service;
 
 
-import com.sun.tools.javac.util.List;
 import de.neozo.jblockchain.common.domain.Address;
 import de.neozo.jblockchain.common.domain.Node;
-import de.neozo.jblockchain.common.domain.Transaction;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,7 +57,7 @@ public class AddressService {
      */
     public void retrieveAddresses(Node node, RestTemplate restTemplate) {
         Address[] addresses = restTemplate.getForObject(node.getAddress() + "/address", Address[].class);
-        List.from(addresses).forEach(this::add);
+        Arrays.asList(addresses).forEach(this::add);
         LOG.info("Retrieved " + addresses.length + " addresses from node " + node.getAddress());
     }
 }
