@@ -1,7 +1,6 @@
 package de.neozo.jblockchain.common.domain;
 
 
-import javax.validation.constraints.NotNull;
 import java.net.URL;
 
 public class Node {
@@ -9,7 +8,6 @@ public class Node {
     /**
      * HTTP-Address including port on which the addressed node listens for incoming connections
      */
-    @NotNull
     private URL address;
 
     public Node() {
