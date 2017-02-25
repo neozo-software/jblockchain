@@ -14,7 +14,7 @@ cd jblockchain
 ```
 Anschließend werden drei Module gebaut:
 * __common__: Von den folgenden Modulen gemeinsam genutzter Code
-* __node__: Teil des Blockchain-Netzes, der Transaktion und Blöcke verwaltet
+* __node__: Teil des Blockchain-Netzes, der Transaktionen und Blöcke verwaltet
 * __client__: Ein Kommandozeilen-Client zur einfachen Kommunikation mit Nodes
 
 Der Node wird einfach durch Ausführung der jar-Datei gestartet und kontaktiert anschließend den konfigurierten Master-Node um alle erforderlichrn Daten herunterzuladen.
