@@ -38,7 +38,7 @@ Mit dem öffentlichen Schlüssel kann nun die Adresse für Max Mustermann werden
 java -jar client-0.0.1-SNAPSHOT.jar --address --node "http://localhost:8080" --name "Max Mustermann" --publickey key.pub
 ```
 
-Unter der Resource <http://localhost:8080/address> kann kontrolliert werden, dass die Adresse im System angekommen ist. Für den nächsten Schritt kann hier der Hash erzeugten Adresse entnommen werden. Denn um eine Transaktion zu erstellen, muss die Sender-Adresse über den Hash identifiziert werden.
+Unter der Resource <http://localhost:8080/address> kann kontrolliert werden, dass die Adresse im System angekommen ist. Für den nächsten Schritt wird dort der Hash der erzeugten Adresse entnommen werden. Denn um eine Transaktion zu erstellen, muss die Sender-Adresse über den Hash identifiziert werden.
 
 ```shell
 java -jar client-0.0.1-SNAPSHOT.jar --transaction --node "http://localhost:8080" --sender "Tdz0bKDfca3QjFAe5Ccuj9Noy6ah8n+R8DnZznvjic4=" --message "Hallo Welt" --privatekey key.priv 
