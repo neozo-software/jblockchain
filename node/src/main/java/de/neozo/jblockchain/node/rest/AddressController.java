@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 
@@ -42,13 +43,21 @@ public class AddressController {
      * Add a new Address
      * @param address the Address to add
      * @param publish if true, this Node is going to inform all other Nodes about the new Address
+     * @param response Status Code 202 if Address was added, 406 if submitted hash is already present
      */
     @RequestMapping(method = RequestMethod.PUT)
-    void addAddress(@RequestBody Address address, @RequestParam(required = false) Boolean publish) {
+    void addAddress(@RequestBody Address address, @RequestParam(required = false) Boolean publish, HttpServletResponse response) {
         LOG.info("Add address " + Base64.encodeBase64String(address.getHash()));
-        addressService.add(address);
-        if (publish != null && publish) {
-            nodeService.broadcastPut("address", address);
+
+        if (addressService.getByHash(address.getHash()) == null) {
+            addressService.add(address);
+
+            if (publish != null && publish) {
+                nodeService.broadcastPut("address", address);
+            }
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
         }
     }
 
