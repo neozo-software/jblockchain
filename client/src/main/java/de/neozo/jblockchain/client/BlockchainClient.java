@@ -5,6 +5,7 @@ import de.neozo.jblockchain.common.SignatureUtils;
 import de.neozo.jblockchain.common.domain.Address;
 import de.neozo.jblockchain.common.domain.Transaction;
 import org.apache.commons.cli.*;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -15,7 +16,6 @@ import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.Base64;
 
 
 /**
@@ -62,7 +62,7 @@ public class BlockchainClient {
             if (node == null || message == null || sender == null || privatekey == null) {
                 throw new ParseException("node, message, sender and privatekey is required");
             }
-            publishTransaction(new URL(node), Paths.get(privatekey), message, Base64.getDecoder().decode(sender));
+            publishTransaction(new URL(node), Paths.get(privatekey), message, Base64.decodeBase64(sender));
         }
     }
 
@@ -123,12 +123,16 @@ public class BlockchainClient {
 
     private static void publishAddress(URL node, Path publicKey, String name) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put(node.toString() + "/address?publish=true", new Address(name, Files.readAllBytes(publicKey)));
+        Address address = new Address(name, Files.readAllBytes(publicKey));
+        restTemplate.put(node.toString() + "/address?publish=true", address);
+        System.out.println("Hash of new address: " + Base64.encodeBase64String(address.getHash()));
     }
 
     private static void publishTransaction(URL node, Path privateKey, String text, byte[] senderHash) throws Exception {
-        byte[] signature = SignatureUtils.sign(text.getBytes(), Files.readAllBytes(privateKey));
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put(node.toString() + "/transaction?publish=true", new Transaction(text, senderHash, signature));
+        byte[] signature = SignatureUtils.sign(text.getBytes(), Files.readAllBytes(privateKey));
+        Transaction transaction = new Transaction(text, senderHash, signature);
+        restTemplate.put(node.toString() + "/transaction?publish=true", transaction);
+        System.out.println("Hash of new transaction: " + Base64.encodeBase64String(transaction.getHash()));
     }
 }
