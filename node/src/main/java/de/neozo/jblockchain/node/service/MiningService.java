@@ -60,7 +60,7 @@ public class MiningService implements Runnable {
             Block block = mineBlock();
             if (block != null) {
                 // Found block! Append and publish
-                LOG.info("Mined block with " + block.getTransactions().size() + " transactions and nonce " + block.getNonce());
+                LOG.info("Mined block with " + block.getTransactions().size() + " transactions and nonce " + block.getTries());
                 blockService.append(block);
                 nodeService.broadcastPut("block", block);
             }
@@ -69,7 +69,7 @@ public class MiningService implements Runnable {
     }
 
     private Block mineBlock() {
-        long nonce = 0;
+        long tries = 0;
 
         // get previous hash and transactions
         byte[] previousBlockHash = blockService.getLastBlock() != null ? blockService.getLastBlock().getHash() : null;
@@ -89,11 +89,11 @@ public class MiningService implements Runnable {
 
         // try new block until difficulty is sufficient
         while (runMiner.get()) {
-            Block block = new Block(previousBlockHash, transactions, nonce);
+            Block block = new Block(previousBlockHash, transactions, tries);
             if (block.getLeadingZerosCount() >= Config.DIFFICULTY) {
                 return block;
             }
-            nonce++;
+            tries++;
         }
         return null;
     }
