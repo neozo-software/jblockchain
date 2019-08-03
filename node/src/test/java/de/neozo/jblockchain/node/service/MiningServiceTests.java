@@ -5,6 +5,7 @@ import de.neozo.jblockchain.common.SignatureUtils;
 import de.neozo.jblockchain.common.domain.Address;
 import de.neozo.jblockchain.common.domain.Transaction;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class MiningServiceTests {
     }
 
     @Test
+    @Ignore
     public void startStopMiner() throws Exception {
         final int initalTransactions = 100;
         addTransactions(initalTransactions);
