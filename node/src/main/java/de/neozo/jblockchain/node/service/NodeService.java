@@ -6,7 +6,7 @@ import de.neozo.jblockchain.node.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
+import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 @Service
-public class NodeService implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
+public class NodeService implements ApplicationListener<ServletWebServerInitializedEvent> {
 
     private final static Logger LOG = LoggerFactory.getLogger(NodeService.class);
 
@@ -46,15 +46,15 @@ public class NodeService implements ApplicationListener<EmbeddedServletContainer
      *  - Current Blockchain
      *  - Transactions in pool
      *  and publish self on all other Nodes
-     * @param embeddedServletContainerInitializedEvent serverletContainer for port retrieval
+     * @param servletWebServerInitializedEvent serverletContainer for port retrieval
      */
     @Override
-    public void onApplicationEvent(EmbeddedServletContainerInitializedEvent embeddedServletContainerInitializedEvent) {
+    public void onApplicationEvent(ServletWebServerInitializedEvent servletWebServerInitializedEvent) {
         Node masterNode = getMasterNode();
 
         // construct self node
         String host = retrieveSelfExternalHost(masterNode, restTemplate);
-        int port = embeddedServletContainerInitializedEvent.getEmbeddedServletContainer().getPort();
+        int port = servletWebServerInitializedEvent.getWebServer().getPort();
 
         self = getSelfNode(host, port);
         LOG.info("Self address: " + self.getAddress());
